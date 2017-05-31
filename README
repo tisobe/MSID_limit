@@ -33,7 +33,12 @@ This script compares the current mta limit data base to glimmon and update the f
     
     Output:
     -------
-    op_limits.db    --- updated mta limit database locally saved
+    ./op_limits.db    --- updated mta limit database locally saved
+    ./Past_data/op_limits.db_<time stamp>       ---- the past op_limits.db
+    ./Past_data/glimmondb.sqlite3_<time stamp>  ---- the past sql database
+
+    /data/mta4/MTA/data/op_limits/op_limits.db  ---- the database to be actually used
+
 
 ++++++++++++++++++++
 Environment setting
