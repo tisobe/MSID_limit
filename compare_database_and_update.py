@@ -7,7 +7,7 @@
 #                                                                                                   #
 #           author: t. isobe (tisobe@cfa.harvard.edu)                                               #
 #                                                                                                   #
-#           last update: May 31, 2017                                                               #
+#           last update: Feb 15, 2018                                                               #
 #                                                                                                   #
 #####################################################################################################
 
@@ -45,6 +45,13 @@ def compare_database_and_update():
     output: updated op_limits.db (locally saved)
     """
 #
+#--- read the special_msid_list
+#
+    ifile = './special_msid_list'
+    f     = open(ifile, 'r')
+    special_msid_list = [line.strip() for line in f.readlines()]
+    f.close()
+#
 #--- get time stamps
 #
     today   = strftime("%Y_%m_%d", localtime())                     #--- e.g.2015_03_13
@@ -65,6 +72,11 @@ def compare_database_and_update():
     updates      = {}
 
     for msid in msids:
+#
+#--- if the msid is in the special_msid_list, skip --- they are manually defined by mta
+#
+        if msid.lower() in special_msid_list:
+            continue
 #
 #--- there are temperature related msids based on K and C. update both
 #
@@ -141,6 +153,7 @@ def compare_database_and_update():
 #
 #--- now update the original data. append the updated line to the end of each msid entry
 #
+    exit(1)
     fo = open('./op_limits.db', 'w')
 
     prev = ''
@@ -165,8 +178,9 @@ def compare_database_and_update():
 #--- if so, add the line before printing the current line
 #
                 try:
-                    line = updates[prev] 
-                    line = line + ent
+                    if not (prev in special_msid_list):
+                        line = updates[prev] 
+                        line = line + ent
                 except:
                     line = ent
 
